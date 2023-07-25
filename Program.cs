@@ -1,6 +1,35 @@
 ﻿
 Player newPlayer = new();
-Cavern cavern = new();
+int cavernSize;
+
+Console.WriteLine("Choose the size of the cavern (small, medium, large).");
+while (true)
+{
+    string? input = Console.ReadLine();
+    if (input == "small")
+    {
+        cavernSize = 4;
+        break;
+    }
+    else if (input == "medium")
+    {
+        cavernSize = 6;
+        break;
+    }
+    else if (input == "large")
+    {
+        cavernSize = 8;
+        break;
+    }
+    else
+    {
+        Console.WriteLine("Invalid command");
+        continue;
+    }
+}
+
+Console.Clear();
+Cavern cavern = new(cavernSize);
 
 while (true)
 {
@@ -97,21 +126,25 @@ public class Cavern
     private bool _fountainEnabled = false;
     private bool _win = false;
     private bool _entrance = false;
+    private int _gridSize;
 
     public bool[,] Grid => _grid;
     public bool FountainRoom => _fountainRoom;
     public bool FountainEnabled => _fountainEnabled;
     public bool Entrance => _entrance;
     public bool Win => _win;
+    public int GridSize => _gridSize;
 
     public Cavern()
     {
+        _gridSize = 4;
         _grid = new bool[4, 4];
     }
 
-    public Cavern(int size)
+    public Cavern(int gridSize)
     {
-        _grid = new bool[size, size];
+        _gridSize = gridSize;
+        _grid = new bool[gridSize, gridSize];
     }
     
     public void UpdatePlayerPos(Player player)
