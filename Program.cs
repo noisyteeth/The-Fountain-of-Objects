@@ -50,7 +50,7 @@ while (true)
 
     Console.WriteLine("What do you want to do?");
 
-    string input = Console.ReadLine();
+    string? input = Console.ReadLine();
     switch (input)
     {
         case "move north":
@@ -125,7 +125,7 @@ public class Cavern
     private bool _fountainEnabled = false;
     private bool _win = false;
     private bool _entrance = false;
-    private int _gridSize;
+    private readonly int _gridSize;
 
     public bool[,] Grid => _grid;
     public bool FountainRoom => _fountainRoom;
@@ -152,9 +152,10 @@ public class Cavern
         int yPos = player.PlayerCoord.Y;
 
         for (int x = 0; x < _grid.GetLength(0); x++)
+        {
             for (int y = 0; y < _grid.GetLength(1); y++)
             {
-                if (y == yPos && x == xPos) 
+                if (y == yPos && x == xPos)
                     _grid[x, y] = true;
                 else _grid[x, y] = false;
 
@@ -165,14 +166,24 @@ public class Cavern
                     _entrance = true;
                 else _entrance = false;
             }
+        }
     }
 
     public void ShowRoomsStatus()
     {
-        for (int x = 0; x < Grid.GetLength(0); x++)
-            for (int y = 0; y < Grid.GetLength(1); y++)
-                Console.WriteLine($"({x}, {y}) = {Grid[x, y]}");
+        for (int y = 0; y < Grid.GetLength(0); y++)
+        {
+            Console.WriteLine();
 
+            for (int x = 0; x < Grid.GetLength(1); x++)
+            {
+                // Console.WriteLine($"({x}, {y}) = {Grid[x, y]}");
+                Console.Write(String.Format("({0},{1}) = {2,5}", x, y, Grid[x, y]));
+                Console.Write(" | ");
+            }
+        }
+
+        Console.WriteLine();
         Console.WriteLine("------------------------------------------");
         Console.WriteLine($"FountainRoom = {FountainRoom}");
         Console.WriteLine($"FountainEnabled = {FountainEnabled}");
@@ -184,9 +195,11 @@ public class Cavern
     public void CheckSpecialRoom()
     {
         if (FountainRoom == true)
+        {
             if (FountainEnabled == false)
                 Console.WriteLine("You hear water dripping in this room. The Fountain of Objects is here!");
             else Console.WriteLine("You hear the rushing waters from the Fountain of Objects. It has been reactivated!");
+        }
 
         if (Entrance == true)
         {
