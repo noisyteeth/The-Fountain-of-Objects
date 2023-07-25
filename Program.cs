@@ -177,8 +177,10 @@ public class Cavern
 
             for (int x = 0; x < Grid.GetLength(1); x++)
             {
-                // Console.WriteLine($"({x}, {y}) = {Grid[x, y]}");
-                Console.Write(String.Format("({0},{1}) = {2,5}", x, y, Grid[x, y]));
+                if (Grid[x, y] == true) Console.ForegroundColor = ConsoleColor.Green;
+
+                Console.Write(String.Format("({0},{1})", x, y));
+                Console.ResetColor();
                 Console.Write(" | ");
             }
         }
