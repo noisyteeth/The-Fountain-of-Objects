@@ -2,6 +2,9 @@
 Player newPlayer = new();
 int cavernSize;
 
+//////////////////////////
+// WORLD SIZE SELECTION //
+//////////////////////////
 Console.WriteLine("Choose the size of the cavern (small, medium, large).");
 while (true)
 {
@@ -30,6 +33,9 @@ while (true)
 
 Cavern cavern = new(cavernSize);
 
+////////////////////
+// MAIN GAME LOOP //
+////////////////////
 while (true)
 {
     Console.Clear();
@@ -71,6 +77,9 @@ while (true)
     }
 }
 
+//////////////////////////
+// CLASSES AND THE REST //
+//////////////////////////
 public class Player
 {
     public bool Dead { get; private set; }
@@ -85,28 +94,24 @@ public class Player
 
     public void MovePlayer(string command, Cavern cavern)
     {
-        if (command == "move north")
+        switch (command)
         {
-            if (PlayerCoord.Y - 1 < 0 ) return;
-            PlayerCoord.Y--;
-        }
-
-        if (command == "move south")
-        {
-            if (PlayerCoord.Y + 1 > cavern.Grid.GetLength(0) - 1) return;
-            PlayerCoord.Y++;
-        }
-
-        if (command == "move east")
-        {
-            if (PlayerCoord.X + 1 > cavern.Grid.GetLength(0) - 1) return;
-            PlayerCoord.X++;
-        }
-
-        if (command == "move west")
-        {
-            if (PlayerCoord.X - 1 < 0) return;
-            PlayerCoord.X--;
+            case "move north":
+                if (PlayerCoord.Y - 1 < 0) return;
+                PlayerCoord.Y--;
+                break;
+            case "move south":
+                if (PlayerCoord.Y + 1 > cavern.Grid.GetLength(0) - 1) return;
+                PlayerCoord.Y++;
+                break;
+            case "move east":
+                if (PlayerCoord.X + 1 > cavern.Grid.GetLength(0) - 1) return;
+                PlayerCoord.X++;
+                break;
+            case "move west":
+                if (PlayerCoord.X - 1 < 0) return;
+                PlayerCoord.X--;
+                break;
         }
     }
 
@@ -208,13 +213,18 @@ public class Cavern
         Console.WriteLine();
     }
 
+    /// <summary>
+    /// Check if a room is a "special room", i.e. the fountain room or the entrance.
+    /// </summary>
     public void CheckSpecialRoom()
     {
         if (FountainRoom == true)
         {
             if (FountainEnabled == false)
                 Console.WriteLine("You hear water dripping in this room. The Fountain of Objects is here!");
-            else Console.WriteLine("You hear the rushing waters from the Fountain of Objects. It has been reactivated!");
+
+            else 
+                Console.WriteLine("You hear the rushing waters from the Fountain of Objects. It has been reactivated!");
         }
 
         if (Entrance == true)
@@ -229,9 +239,13 @@ public class Cavern
         }
     }
 
+    /// <summary>
+    /// Enables the fountain if the player is in the fountain room and the fountain is disabled.
+    /// </summary>
+    /// <param name="command"></param>
     public void EnableFountain(string command)
     {
-        if (command == "enable fountain" && FountainEnabled == false)
+        if (command == "enable fountain" && FountainEnabled == false && FountainRoom == true)
             _fountainEnabled = true;
     }
 }
