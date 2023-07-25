@@ -125,7 +125,18 @@ public class Cavern
     private bool _fountainEnabled = false;
     private bool _win = false;
     private bool _entrance = false;
+
     private readonly int _gridSize;
+
+    private Coord FountainCoord
+    {
+        get
+        {
+            if (_gridSize == 6) return new Coord(3, 0);
+            else if (_gridSize == 8) return new Coord(4, 0);
+            return new Coord(2, 0);
+        }
+    }
 
     public bool[,] Grid => _grid;
     public bool FountainRoom => _fountainRoom;
@@ -159,7 +170,7 @@ public class Cavern
                     _grid[x, y] = true;
                 else _grid[x, y] = false;
 
-                if (xPos == 2 && yPos == 0) _fountainRoom = true;
+                if (xPos == FountainCoord.X && yPos == FountainCoord.Y) _fountainRoom = true;
                 else _fountainRoom = false;
 
                 if (xPos == 0 && yPos == 0)
@@ -169,6 +180,11 @@ public class Cavern
         }
     }
 
+    /// <summary>
+    /// Shows the current location of the player within a grid representation of the world.
+    /// Also shows conditions that have or haven't been fulfulled.
+    /// Only for testing purposes.
+    /// </summary>
     public void ShowRoomsStatus()
     {
         for (int y = 0; y < Grid.GetLength(0); y++)
@@ -178,7 +194,6 @@ public class Cavern
             for (int x = 0; x < Grid.GetLength(1); x++)
             {
                 if (Grid[x, y] == true) Console.ForegroundColor = ConsoleColor.Green;
-
                 Console.Write(String.Format("({0},{1})", x, y));
                 Console.ResetColor();
                 Console.Write(" | ");
@@ -186,10 +201,9 @@ public class Cavern
         }
 
         Console.WriteLine();
-        Console.WriteLine("------------------------------------------");
+        Console.WriteLine("---------------------------------------------------------------");
         Console.WriteLine($"FountainRoom = {FountainRoom}");
         Console.WriteLine($"FountainEnabled = {FountainEnabled}");
-        Console.WriteLine($"Win = {Win}");
         Console.WriteLine($"Entrance = {Entrance}");
         Console.WriteLine();
     }
@@ -207,8 +221,8 @@ public class Cavern
         {
             if (FountainEnabled == true)
             {
-                Console.WriteLine("The Fountain of Objects has been reactivated, and you have escaped with your life!");
                 _win = true;
+                Console.WriteLine("The Fountain of Objects has been reactivated, and you have escaped with your life!");
             }
             
             else Console.WriteLine("You see light coming from the cavern entrance.");
