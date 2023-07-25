@@ -28,11 +28,12 @@ while (true)
     }
 }
 
-Console.Clear();
 Cavern cavern = new(cavernSize);
 
 while (true)
 {
+    Console.Clear();
+
     cavern.UpdatePlayerPos(newPlayer);
 
     Console.WriteLine($"You are in the room at X={newPlayer.PlayerCoord.X} Y={newPlayer.PlayerCoord.Y}.");
@@ -68,8 +69,6 @@ while (true)
             cavern.EnableFountain(input);
             break;
     }
-
-    Console.Clear();
 }
 
 public class Player
@@ -177,6 +176,8 @@ public class Cavern
         Console.WriteLine("------------------------------------------");
         Console.WriteLine($"FountainRoom = {FountainRoom}");
         Console.WriteLine($"FountainEnabled = {FountainEnabled}");
+        Console.WriteLine($"Win = {Win}");
+        Console.WriteLine($"Entrance = {Entrance}");
         Console.WriteLine();
     }
 
