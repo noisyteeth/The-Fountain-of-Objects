@@ -1,9 +1,39 @@
 ﻿
 Player newPlayer = new();
-Cavern cavern = new();
+int cavernSize;
+
+Console.WriteLine("Choose the size of the cavern (small, medium, large).");
+while (true)
+{
+    string? input = Console.ReadLine();
+    if (input == "small")
+    {
+        cavernSize = 4;
+        break;
+    }
+    else if (input == "medium")
+    {
+        cavernSize = 6;
+        break;
+    }
+    else if (input == "large")
+    {
+        cavernSize = 8;
+        break;
+    }
+    else
+    {
+        Console.WriteLine("Invalid command");
+        continue;
+    }
+}
+
+Cavern cavern = new(cavernSize);
 
 while (true)
 {
+    Console.Clear();
+
     cavern.UpdatePlayerPos(newPlayer);
 
     Console.WriteLine($"You are in the room at X={newPlayer.PlayerCoord.X} Y={newPlayer.PlayerCoord.Y}.");
@@ -20,7 +50,7 @@ while (true)
 
     Console.WriteLine("What do you want to do?");
 
-    string input = Console.ReadLine();
+    string? input = Console.ReadLine();
     switch (input)
     {
         case "move north":
@@ -39,8 +69,6 @@ while (true)
             cavern.EnableFountain(input);
             break;
     }
-
-    Console.Clear();
 }
 
 public class Player
@@ -98,20 +126,35 @@ public class Cavern
     private bool _win = false;
     private bool _entrance = false;
 
+    private readonly int _gridSize;
+
+    private Coord FountainCoord
+    {
+        get
+        {
+            if (_gridSize == 6) return new Coord(3, 0);
+            else if (_gridSize == 8) return new Coord(4, 0);
+            return new Coord(2, 0);
+        }
+    }
+
     public bool[,] Grid => _grid;
     public bool FountainRoom => _fountainRoom;
     public bool FountainEnabled => _fountainEnabled;
     public bool Entrance => _entrance;
     public bool Win => _win;
+    public int GridSize => _gridSize;
 
     public Cavern()
     {
+        _gridSize = 4;
         _grid = new bool[4, 4];
     }
 
-    public Cavern(int size)
+    public Cavern(int gridSize)
     {
-        _grid = new bool[size, size];
+        _gridSize = gridSize;
+        _grid = new bool[gridSize, gridSize];
     }
     
     public void UpdatePlayerPos(Player player)
@@ -120,46 +163,66 @@ public class Cavern
         int yPos = player.PlayerCoord.Y;
 
         for (int x = 0; x < _grid.GetLength(0); x++)
+        {
             for (int y = 0; y < _grid.GetLength(1); y++)
             {
-                if (y == yPos && x == xPos) 
+                if (y == yPos && x == xPos)
                     _grid[x, y] = true;
                 else _grid[x, y] = false;
 
-                if (xPos == 2 && yPos == 0) _fountainRoom = true;
+                if (xPos == FountainCoord.X && yPos == FountainCoord.Y) _fountainRoom = true;
                 else _fountainRoom = false;
 
                 if (xPos == 0 && yPos == 0)
                     _entrance = true;
                 else _entrance = false;
             }
+        }
     }
 
+    /// <summary>
+    /// Shows the current location of the player within a grid representation of the world.
+    /// Also shows conditions that have or haven't been fulfulled.
+    /// Only for testing purposes.
+    /// </summary>
     public void ShowRoomsStatus()
     {
-        for (int x = 0; x < Grid.GetLength(0); x++)
-            for (int y = 0; y < Grid.GetLength(1); y++)
-                Console.WriteLine($"({x}, {y}) = {Grid[x, y]}");
+        for (int y = 0; y < Grid.GetLength(0); y++)
+        {
+            Console.WriteLine();
 
-        Console.WriteLine("------------------------------------------");
+            for (int x = 0; x < Grid.GetLength(1); x++)
+            {
+                if (Grid[x, y] == true) Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write(String.Format("({0},{1})", x, y));
+                Console.ResetColor();
+                Console.Write(" | ");
+            }
+        }
+
+        Console.WriteLine();
+        Console.WriteLine("---------------------------------------------------------------");
         Console.WriteLine($"FountainRoom = {FountainRoom}");
         Console.WriteLine($"FountainEnabled = {FountainEnabled}");
+        Console.WriteLine($"Entrance = {Entrance}");
         Console.WriteLine();
     }
 
     public void CheckSpecialRoom()
     {
         if (FountainRoom == true)
+        {
             if (FountainEnabled == false)
                 Console.WriteLine("You hear water dripping in this room. The Fountain of Objects is here!");
             else Console.WriteLine("You hear the rushing waters from the Fountain of Objects. It has been reactivated!");
+        }
 
         if (Entrance == true)
         {
             if (FountainEnabled == true)
             {
-                Console.WriteLine("The Fountain of Objects has been reactivated, and you have escaped with your life!");
                 _win = true;
+                Console.WriteLine("The Fountain of Objects has been reactivated, and you have escaped with your life!");
             }
             
             else Console.WriteLine("You see light coming from the cavern entrance.");
