@@ -71,6 +71,11 @@ public class Map
             _ => new bool[4, 4]
         };
     }
+
+    public void LoadMap()
+    {
+
+    }
 } 
 
 public class Game
