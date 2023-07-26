@@ -45,8 +45,33 @@ public class Player
 
 public class Map
 {
+    private RoomTypes[,] _rooms;
+    private bool[,] _playerLoc;
+    private int _gridSize;
+    private RoomTypes _playerRoom;
 
-}
+    public RoomTypes PlayerRoom => _playerRoom;
+    
+    public Map(int size)
+    {
+        _gridSize = size;
+        _playerRoom = RoomTypes.Normal;
+
+        _rooms = size switch
+        {
+            6 => new RoomTypes[6, 6],
+            8 => new RoomTypes[8, 8],
+            _ => new RoomTypes[4, 4]
+        };
+
+        _playerLoc = size switch
+        {
+            6 => new bool[6, 6],
+            8 => new bool[8, 8],
+            _ => new bool[4, 4]
+        };
+    }
+} 
 
 public class Game
 {
