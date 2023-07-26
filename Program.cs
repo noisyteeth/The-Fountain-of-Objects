@@ -1,4 +1,28 @@
 ﻿
+Map map = new Map(4);
+Player player = new Player();
+Game game = new();
+map.LoadMap();
+
+while (true)
+{
+    Console.WriteLine(map.PlayerRoom);
+    player.Death(map);
+    
+    game.CheckAdjacentPit(map, player);
+    game.Prompts(map, player);
+
+    game.ShowRoomsStatus(map);
+
+    player.MovePlayer(Direction.East, map);
+    map.UpdateLocationMap(player);
+
+    Console.ReadLine();
+
+    Console.Clear();
+}
+
+
 //////////////////////////
 // CLASSES AND THE REST //
 //////////////////////////
