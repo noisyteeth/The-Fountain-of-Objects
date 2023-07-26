@@ -1,82 +1,4 @@
 ﻿
-Player newPlayer = new();
-int cavernSize;
-
-//////////////////////////
-// WORLD SIZE SELECTION //
-//////////////////////////
-Console.WriteLine("Choose the size of the cavern (small, medium, large).");
-while (true)
-{
-    string? input = Console.ReadLine();
-    if (input == "small")
-    {
-        cavernSize = 4;
-        break;
-    }
-    else if (input == "medium")
-    {
-        cavernSize = 6;
-        break;
-    }
-    else if (input == "large")
-    {
-        cavernSize = 8;
-        break;
-    }
-    else
-    {
-        Console.WriteLine("Invalid command");
-        continue;
-    }
-}
-
-Cavern cavern = new(cavernSize);
-
-////////////////////
-// MAIN GAME LOOP //
-////////////////////
-while (true)
-{
-    Console.Clear();
-
-    cavern.UpdatePlayerPos(newPlayer);
-
-    Console.WriteLine($"You are in the room at X={newPlayer.PlayerCoord.X} Y={newPlayer.PlayerCoord.Y}.");
-
-    cavern.ShowRoomsStatus();
-
-    cavern.CheckSpecialRoom();
-
-    if (cavern.Win)
-    {
-        Console.ReadKey();
-        break;
-    }
-
-    Console.WriteLine("What do you want to do?");
-
-    string? input = Console.ReadLine();
-    switch (input)
-    {
-        case "move north":
-            newPlayer.MovePlayer(input, cavern);
-            break;
-        case "move south":
-            newPlayer.MovePlayer(input, cavern);
-            break;
-        case "move east":
-            newPlayer.MovePlayer(input, cavern);
-            break;
-        case "move west":
-            newPlayer.MovePlayer(input, cavern);
-            break;
-        case "enable fountain":
-            cavern.EnableFountain(input);
-            break;
-    }
-}
-
 //////////////////////////
 // CLASSES AND THE REST //
 //////////////////////////
@@ -119,6 +41,16 @@ public class Player
     {
         Console.WriteLine(PlayerCoordString);
     }
+}
+
+public class Map
+{
+
+}
+
+public class Game
+{
+
 }
 
 public class Cavern
