@@ -14,31 +14,22 @@ public class Player
         PlayerCoord = new(0, 0);
     }
 
-    public void MovePlayer(string command, Cavern cavern)
-    public void MovePlayer(string command, Map map)
     public void MovePlayer(Direction direction, Map map)
     {
-        switch (command)
         switch (direction)
         {
-            case "move north":
             case Direction.North:
                 if (PlayerCoord.Y - 1 < 0) return;
                 PlayerCoord.Y--;
                 break;
-            case "move south":
-                if (PlayerCoord.Y + 1 > cavern.Grid.GetLength(0) - 1) return;
             case Direction.South:
                 if (PlayerCoord.Y + 1 > map.GridSize - 1) return;
                 PlayerCoord.Y++;
                 break;
-            case "move east":
-                if (PlayerCoord.X + 1 > cavern.Grid.GetLength(0) - 1) return;
             case Direction.East:
                 if (PlayerCoord.X + 1 > map.GridSize - 1) return;
                 PlayerCoord.X++;
                 break;
-            case "move west":
             case Direction.West:
                 if (PlayerCoord.X - 1 < 0) return;
                 PlayerCoord.X--;
@@ -55,18 +46,9 @@ public class Player
 public class Map
 {
     private RoomTypes[,] _rooms;    // represents the rooms of the world
-    private bool[,] _playerLoc;     // represents the player's location within the grid
     private bool[,] _playerLoc;     // represents the player's location within the world
     private int _gridSize;          // represents the size of the world
     private RoomTypes _playerRoom;  // represents the room that the player is currently in
-    
-    // TODO:
-    // Load _rooms with RoomTypes and _playerLoc with booleans. Rooms depend on _gridSize
-    // compare _rooms to Player.PlayerCoord, then update RoomTypes based on that
-    // Update _playerLoc to represent the player's current location in the world
-    // Based on _playerRoom, do something unique
-
-    public RoomTypes PlayerRoom => _playerRoom;
     
     public RoomTypes[,] Rooms => _rooms;
     public bool[,] PlayerLoc => _playerLoc;
@@ -76,7 +58,6 @@ public class Map
     public Map(int size)
     {
         _gridSize = size;
-        _playerRoom = RoomTypes.Normal;
         _playerRoom = RoomTypes.Entrance;
 
         _rooms = size switch
@@ -97,7 +78,6 @@ public class Map
     public void LoadMap()
     {
         _rooms[0, 0] = RoomTypes.Entrance;
-        _playerLoc[0, 0] = false;
         _playerLoc[0, 0] = true;
 
         if (_gridSize == 4)
@@ -155,6 +135,11 @@ public class Game
 
     private bool _win;
     private bool _fountainEnabled;
+    private bool _pitIsNear;
+
+    public bool Win => _win;
+    public bool FountainEnabled => _fountainEnabled;
+    public bool PitIsNear => _pitIsNear;
 
     public Game()
     {
@@ -162,9 +147,44 @@ public class Game
         _fountainEnabled = false;
     }
 
-    public void CheckRoom(Map map)
+    public void CheckAdjacentPit(Map map, Player player)
     {
-        
+        for (int x = 0; x < map.GridSize; x++)
+        {
+            for (int y = 0; y < map.GridSize; y++)
+            {
+                if (Coord.IsAdjacent(player.PlayerCoord, x, y))
+                {
+                    if (map.Rooms[x, y] == RoomTypes.Pit)
+                    {
+                        _pitIsNear = true;
+                        return;
+                    }
+                }
+            }
+        }
+
+        _pitIsNear = false;
+    }
+
+    public void Prompts()
+    {
+        if (_pitIsNear)
+            Console.WriteLine("You feel a draft. There is a pit in a nearby room.");
+    }
+
+    public void Prompts(Map map)
+    {
+        if (map.PlayerRoom == RoomTypes.Entrance)
+            Console.WriteLine("You see light coming from the cavern entrance.");
+
+        if (map.PlayerRoom == RoomTypes.FountainRoom)
+        {
+            if (_fountainEnabled)
+                Console.WriteLine("You hear the rushing waters from the Fountain of Objects. It has been reactivated!");
+            else
+                Console.WriteLine("You hear water dripping in this room. The Fountain of Objects is here!");
+        }
     }
 }
 
@@ -318,6 +338,24 @@ public class Coord
     {
         int rowDifference = Math.Abs(first.X - second.X);
         int columnDifference = Math.Abs(first.Y - second.Y);
+
+        bool rowAdjacent = false;
+        bool columnAdjacent = false;
+
+        if (rowDifference <= 1 && rowDifference >= -1)
+            rowAdjacent = true;
+        if (columnDifference <= 1 && columnDifference >= -1)
+            columnAdjacent = true;
+
+        if (rowAdjacent && columnAdjacent) return true;
+
+        return false;
+    }
+
+    public static bool IsAdjacent(Coord first, int x, int y)
+    {
+        int rowDifference = Math.Abs(first.X - x);
+        int columnDifference = Math.Abs(first.Y - y);
 
         bool rowAdjacent = false;
         bool columnAdjacent = false;
