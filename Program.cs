@@ -16,24 +16,30 @@ public class Player
 
     public void MovePlayer(string command, Cavern cavern)
     public void MovePlayer(string command, Map map)
+    public void MovePlayer(Direction direction, Map map)
     {
         switch (command)
+        switch (direction)
         {
             case "move north":
+            case Direction.North:
                 if (PlayerCoord.Y - 1 < 0) return;
                 PlayerCoord.Y--;
                 break;
             case "move south":
                 if (PlayerCoord.Y + 1 > cavern.Grid.GetLength(0) - 1) return;
+            case Direction.South:
                 if (PlayerCoord.Y + 1 > map.GridSize - 1) return;
                 PlayerCoord.Y++;
                 break;
             case "move east":
                 if (PlayerCoord.X + 1 > cavern.Grid.GetLength(0) - 1) return;
+            case Direction.East:
                 if (PlayerCoord.X + 1 > map.GridSize - 1) return;
                 PlayerCoord.X++;
                 break;
             case "move west":
+            case Direction.West:
                 if (PlayerCoord.X - 1 < 0) return;
                 PlayerCoord.X--;
                 break;
@@ -60,13 +66,17 @@ public class Map
     // Based on _playerRoom, do something unique
 
     public RoomTypes PlayerRoom => _playerRoom;
+    
     public RoomTypes[,] Rooms => _rooms;
+    public bool[,] PlayerLoc => _playerLoc;
     public int GridSize => _gridSize;
+    public RoomTypes PlayerRoom => _playerRoom;
     
     public Map(int size)
     {
         _gridSize = size;
         _playerRoom = RoomTypes.Normal;
+        _playerRoom = RoomTypes.Entrance;
 
         _rooms = size switch
         {
@@ -87,6 +97,7 @@ public class Map
     {
         _rooms[0, 0] = RoomTypes.Entrance;
         _playerLoc[0, 0] = false;
+        _playerLoc[0, 0] = true;
 
         if (_gridSize == 4)
         {
@@ -124,7 +135,10 @@ public class Map
             for (int y = 0; y < _gridSize; y++)
             {
                 if (y == yPos && x == xPos)
+                {
                     _playerLoc[x, y] = true;
+                    _playerRoom = _rooms[x, y];
+                }
                 else _playerLoc[x, y] = false;
             }
         }
