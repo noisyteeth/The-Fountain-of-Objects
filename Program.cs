@@ -51,7 +51,8 @@ public class Map
     private RoomTypes _playerRoom;  // represents the room that the player is currently in
     
     // TODO:
-    // compare _rooms to Player.PlayerCoord, then update RoomTypes based on that 
+    // Load _rooms with RoomTypes and _playerLoc with booleans. Rooms depend on _gridSize
+    // compare _rooms to Player.PlayerCoord, then update RoomTypes based on that
     // Update _playerLoc to represent the player's current location in the world
     // Based on _playerRoom, do something unique
 
@@ -77,9 +78,35 @@ public class Map
         };
     }
 
-    public void LoadMap()
+    public void LoadMap(int size)
     {
+        _rooms[0, 0] = RoomTypes.Entrance;
+        _playerLoc[0, 0] = false;
 
+        if (size == 4)
+        {
+            _rooms[2, 0] = RoomTypes.FountainRoom;
+
+            _rooms[1, 0] = RoomTypes.Pit;
+        }
+
+        else if (size == 6)
+        {
+            _rooms[3, 0] = RoomTypes.FountainRoom;
+
+            _rooms[2, 0] = RoomTypes.Pit; 
+            _rooms[3, 1] = RoomTypes.Pit;
+        }
+
+        else if (size == 8)
+        {
+            _rooms[4, 0] = RoomTypes.FountainRoom;
+
+            _rooms[2, 0] = RoomTypes.Pit;
+            _rooms[3, 1] = RoomTypes.Pit;
+            _rooms[4, 2] = RoomTypes.Pit;
+            _rooms[5, 3] = RoomTypes.Pit; 
+        }
     }
 } 
 
