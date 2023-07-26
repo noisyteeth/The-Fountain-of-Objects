@@ -4,14 +4,17 @@
 //////////////////////////
 public class Player
 {
-    public bool Dead { get; private set; }
-    public Coord PlayerCoord { get; private set; }
+    private bool _dead;
+    private Coord _playerCoord;
+
+    public bool Dead => _dead;
+    public Coord PlayerCoord => _playerCoord;
     public string PlayerCoordString => $"({PlayerCoord.X}, {PlayerCoord.Y})";
 
     public Player()
     {
-        Dead = false;
-        PlayerCoord = new(0, 0);
+        _dead = false;
+        _playerCoord = new(0, 0);
     }
 
     public void MovePlayer(Direction direction, Map map)
@@ -40,6 +43,11 @@ public class Player
     public void ShowPlayerCoord()
     {
         Console.WriteLine(PlayerCoordString);
+    }
+
+    public void Death(Map map)
+    {
+        if (map.PlayerRoom == RoomTypes.Pit) _dead = true;
     }
 }
 
@@ -167,7 +175,7 @@ public class Game
         _pitIsNear = false;
     }
 
-    public void Prompts(Map map)
+    public void Prompts(Map map, Player player)
     {
         if (map.PlayerRoom == RoomTypes.Entrance)
             Console.WriteLine("You see light coming from the cavern entrance.");
@@ -182,6 +190,9 @@ public class Game
 
         if (_pitIsNear)
             Console.WriteLine("You feel a draft. There is a pit in a nearby room.");
+
+        if (player.Dead)
+            Console.WriteLine("You have fallen into a pit and DIED.");
     }
 
     public void ShowRoomsStatus(Map map)
@@ -215,6 +226,8 @@ public class Coord
 
     public static bool IsAdjacent(Coord first, Coord second)
     {
+        if (first.X == second.X && first.Y == second.Y) return false;
+
         int rowDifference = Math.Abs(first.X - second.X);
         int columnDifference = Math.Abs(first.Y - second.Y);
 
@@ -233,6 +246,8 @@ public class Coord
 
     public static bool IsAdjacent(Coord first, int x, int y)
     {
+        if (first.X == x && first.Y == x) return false;
+
         int rowDifference = Math.Abs(first.X - x);
         int columnDifference = Math.Abs(first.Y - y);
 
