@@ -15,6 +15,7 @@ public class Player
     }
 
     public void MovePlayer(string command, Cavern cavern)
+    public void MovePlayer(string command, Map map)
     {
         switch (command)
         {
@@ -24,10 +25,12 @@ public class Player
                 break;
             case "move south":
                 if (PlayerCoord.Y + 1 > cavern.Grid.GetLength(0) - 1) return;
+                if (PlayerCoord.Y + 1 > map.GridSize - 1) return;
                 PlayerCoord.Y++;
                 break;
             case "move east":
                 if (PlayerCoord.X + 1 > cavern.Grid.GetLength(0) - 1) return;
+                if (PlayerCoord.X + 1 > map.GridSize - 1) return;
                 PlayerCoord.X++;
                 break;
             case "move west":
@@ -58,6 +61,7 @@ public class Map
 
     public RoomTypes PlayerRoom => _playerRoom;
     public RoomTypes[,] Rooms => _rooms;
+    public int GridSize => _gridSize;
     
     public Map(int size)
     {
