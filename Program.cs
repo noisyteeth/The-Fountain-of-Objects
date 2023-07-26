@@ -285,3 +285,5 @@ public class Coord
         return false;
     }
 }
+
+public enum RoomTypes { Normal, Entrance, FountainRoom, Pit, Exit }
