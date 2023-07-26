@@ -56,6 +56,7 @@ public class Map
 {
     private RoomTypes[,] _rooms;    // represents the rooms of the world
     private bool[,] _playerLoc;     // represents the player's location within the grid
+    private bool[,] _playerLoc;     // represents the player's location within the world
     private int _gridSize;          // represents the size of the world
     private RoomTypes _playerRoom;  // represents the room that the player is currently in
     
@@ -147,7 +148,24 @@ public class Map
 
 public class Game
 {
+    // TODO:
+    // - Add method to check the room that the player is currently in and do something based on that
+    // - Add method that checks the rooms for adjacent pits
+    // - Add method that checks if certain conditions have been met
 
+    private bool _win;
+    private bool _fountainEnabled;
+
+    public Game()
+    {
+        _win = false;
+        _fountainEnabled = false;
+    }
+
+    public void CheckRoom(Map map)
+    {
+        
+    }
 }
 
 public class Cavern
