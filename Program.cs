@@ -45,10 +45,15 @@ public class Player
 
 public class Map
 {
-    private RoomTypes[,] _rooms;
-    private bool[,] _playerLoc;
-    private int _gridSize;
-    private RoomTypes _playerRoom;
+    private RoomTypes[,] _rooms;    // represents the rooms of the world
+    private bool[,] _playerLoc;     // represents the player's location within the grid
+    private int _gridSize;          // represents the size of the world
+    private RoomTypes _playerRoom;  // represents the room that the player is currently in
+    
+    // TODO:
+    // compare _rooms to Player.PlayerCoord, then update RoomTypes based on that 
+    // Update _playerLoc to represent the player's current location in the world
+    // Based on _playerRoom, do something unique
 
     public RoomTypes PlayerRoom => _playerRoom;
     
@@ -248,4 +253,4 @@ public class Coord
     }
 }
 
-public enum RoomTypes { Normal, Entrance, FountainRoom, Pit, Exit }
+public enum RoomTypes { Normal, Entrance, FountainRoom, Pit }
