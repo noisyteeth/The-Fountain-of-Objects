@@ -57,6 +57,7 @@ public class Map
     // Based on _playerRoom, do something unique
 
     public RoomTypes PlayerRoom => _playerRoom;
+    public RoomTypes[,] Rooms => _rooms;
     
     public Map(int size)
     {
@@ -78,19 +79,19 @@ public class Map
         };
     }
 
-    public void LoadMap(int size)
+    public void LoadMap()
     {
         _rooms[0, 0] = RoomTypes.Entrance;
         _playerLoc[0, 0] = false;
 
-        if (size == 4)
+        if (_gridSize == 4)
         {
             _rooms[2, 0] = RoomTypes.FountainRoom;
 
             _rooms[1, 0] = RoomTypes.Pit;
         }
 
-        else if (size == 6)
+        else if (_gridSize == 6)
         {
             _rooms[3, 0] = RoomTypes.FountainRoom;
 
@@ -98,7 +99,7 @@ public class Map
             _rooms[3, 1] = RoomTypes.Pit;
         }
 
-        else if (size == 8)
+        else if (_gridSize == 8)
         {
             _rooms[4, 0] = RoomTypes.FountainRoom;
 
@@ -106,6 +107,22 @@ public class Map
             _rooms[3, 1] = RoomTypes.Pit;
             _rooms[4, 2] = RoomTypes.Pit;
             _rooms[5, 3] = RoomTypes.Pit; 
+        }
+    }
+
+    public void UpdateLocationMap(Player player)
+    {
+        int xPos = player.PlayerCoord.X;
+        int yPos = player.PlayerCoord.Y;
+
+        for (int x = 0; x < _gridSize; x++)
+        {
+            for (int y = 0; y < _gridSize; y++)
+            {
+                if (y == yPos && x == xPos)
+                    _playerLoc[x, y] = true;
+                else _playerLoc[x, y] = false;
+            }
         }
     }
 } 
@@ -281,3 +298,4 @@ public class Coord
 }
 
 public enum RoomTypes { Normal, Entrance, FountainRoom, Pit }
+public enum Direction { North, South, East, West }
