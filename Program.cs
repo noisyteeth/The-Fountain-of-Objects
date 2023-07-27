@@ -38,6 +38,8 @@ map.LoadMap();
 
 Console.Clear();
 
+DateTime start = DateTime.Now;
+
 while (true)
 {
     game.CheckWin();
@@ -47,6 +49,8 @@ while (true)
 
     if (game.Win)
     {
+        TimeSpan timeSpent = DateTime.Now - start;
+        Console.WriteLine($"Time spent in the cavern: {timeSpent.Minutes}m {timeSpent.Seconds}s");
         Console.ReadKey();
         break;
     }
