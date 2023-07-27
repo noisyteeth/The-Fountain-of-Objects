@@ -223,11 +223,6 @@ public class Map
 
 public class Game
 {
-    // TODO:
-    // - Add method to check the room that the player is currently in and do something based on that
-    // - Add method that checks the rooms for adjacent pits
-    // - Add method that checks if certain conditions have been met
-
     private bool _win;
     private bool _fountainEnabled;
     private bool _pitIsNear;
