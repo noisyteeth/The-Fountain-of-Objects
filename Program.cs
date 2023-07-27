@@ -25,6 +25,7 @@ while (true)
 //////////////////////////
 // CLASSES AND THE REST //
 //////////////////////////
+
 public class Player
 {
     private bool _dead;
@@ -208,6 +209,12 @@ public class Game
         _pitIsNear = false;
     }
 
+    public void EnableFountain()
+    {
+        if (_map.PlayerRoom == RoomTypes.FountainRoom && !_fountainEnabled) 
+            _fountainEnabled = true;
+    } 
+
     public void Prompts()
     {
         if (_map.PlayerRoom == RoomTypes.Entrance)
@@ -237,6 +244,12 @@ public class Game
                 Console.WriteLine(String.Format("{0,-16} ({1}, {2}) {3}", _map.Rooms[x, y], x, y, _map.PlayerLoc[x, y]));
             }
         }
+    }
+
+    public void CheckWin()
+    {
+        if (_map.PlayerRoom == RoomTypes.Entrance && _fountainEnabled)
+            _win = true;
     }
 }
 
