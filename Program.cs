@@ -1,7 +1,7 @@
 ﻿
 Map map = new Map(4);
 Player player = new Player();
-Game game = new();
+Game game = new(map, player);
 map.LoadMap();
 
 while (true)
@@ -9,10 +9,10 @@ while (true)
     Console.WriteLine(map.PlayerRoom);
     player.Death(map);
     
-    game.CheckAdjacentPit(map, player);
-    game.Prompts(map, player);
+    game.CheckAdjacentPit();
+    game.Prompts();
 
-    game.ShowRoomsStatus(map);
+    game.ShowRoomsStatus();
 
     player.MovePlayer(Direction.East, map);
     map.UpdateLocationMap(player);
@@ -21,7 +21,6 @@ while (true)
 
     Console.Clear();
 }
-
 
 //////////////////////////
 // CLASSES AND THE REST //
@@ -168,27 +167,37 @@ public class Game
     private bool _win;
     private bool _fountainEnabled;
     private bool _pitIsNear;
+    private Map _map;
+    private Player _player;
 
     public bool Win => _win;
     public bool FountainEnabled => _fountainEnabled;
     public bool PitIsNear => _pitIsNear;
 
-    public Game()
+    public Game(Map map, Player player)
     {
+        _map = map;
+        _player = player;
         _win = false;
         _fountainEnabled = false;
     }
 
-    public void CheckAdjacentPit(Map map, Player player)
+    public void CheckAdjacentPit()
     {
-        for (int x = 0; x < map.GridSize; x++)
+        for (int x = 0; x < _map.GridSize; x++)
         {
-            for (int y = 0; y < map.GridSize; y++)
+            for (int y = 0; y < _map.GridSize; y++)
             {
-                if (Coord.IsAdjacent(player.PlayerCoord, x, y))
+                if (Coord.IsAdjacent(_player.PlayerCoord, x, y))
                 {
-                    if (map.Rooms[x, y] == RoomTypes.Pit)
+                    if (_map.Rooms[x, y] == RoomTypes.Pit)
                     {
+                        if (Coord.SameCoord(_player.PlayerCoord, x, y))
+                        {
+                            _pitIsNear = false;
+                            return;
+                        }
+
                         _pitIsNear = true;
                         return;
                     }
@@ -199,12 +208,12 @@ public class Game
         _pitIsNear = false;
     }
 
-    public void Prompts(Map map, Player player)
+    public void Prompts()
     {
-        if (map.PlayerRoom == RoomTypes.Entrance)
+        if (_map.PlayerRoom == RoomTypes.Entrance)
             Console.WriteLine("You see light coming from the cavern entrance.");
 
-        if (map.PlayerRoom == RoomTypes.FountainRoom)
+        if (_map.PlayerRoom == RoomTypes.FountainRoom)
         {
             if (_fountainEnabled)
                 Console.WriteLine("You hear the rushing waters from the Fountain of Objects. It has been reactivated!");
@@ -215,17 +224,17 @@ public class Game
         if (_pitIsNear)
             Console.WriteLine("You feel a draft. There is a pit in a nearby room.");
 
-        if (player.Dead)
+        if (_player.Dead)
             Console.WriteLine("You have fallen into a pit and DIED.");
     }
 
-    public void ShowRoomsStatus(Map map)
+    public void ShowRoomsStatus()
     {
-        for (int x = 0; x < map.GridSize; x++)
+        for (int x = 0; x < _map.GridSize; x++)
         {
-            for (int y = 0; y < map.GridSize; y++)
+            for (int y = 0; y < _map.GridSize; y++)
             {
-                Console.WriteLine(String.Format("{0,-16} ({1}, {2}) {3}", map.Rooms[x, y], x, y, map.PlayerLoc[x, y]));
+                Console.WriteLine(String.Format("{0,-16} ({1}, {2}) {3}", _map.Rooms[x, y], x, y, _map.PlayerLoc[x, y]));
             }
         }
     }
@@ -287,6 +296,7 @@ public class Coord
 
         return false;
     }
+
 }
 
 public enum RoomTypes { Normal, Entrance, FountainRoom, Pit }
