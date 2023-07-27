@@ -33,24 +33,56 @@ while (true)
     }
 }
 
-Map map = new Map(4);
+Map map = new Map(worldSize);
 Player player = new Player();
 Game game = new(map, player);
 map.LoadMap();
 
+Console.Clear();
+
 while (true)
 {
+    game.CheckWin();
     player.Death(map);
-    
     game.CheckAdjacentPit();
     game.Prompts();
 
+    if (game.Win)
+    {
+        Console.ReadKey();
+        break;
+    }
+
+    if (player.Dead)
+    {
+        Console.ReadKey();
+        break;
+    }
+
     game.ShowRoomsStatus();
 
-    player.MovePlayer(Direction.East, map);
-    map.UpdateLocationMap(player);
+    string? command = Console.ReadLine();
 
-    Console.ReadLine();
+    switch (command)
+    {
+        case "move north":
+            player.MovePlayer(Direction.North, map);
+            break;
+        case "move south":
+            player.MovePlayer(Direction.South, map);
+            break;
+        case "move east":
+            player.MovePlayer(Direction.East, map);
+            break;
+        case "move west":
+            player.MovePlayer(Direction.West, map);
+            break;
+        case "enable fountain":
+            game.EnableFountain();
+            break;
+    }
+
+    map.UpdateLocationMap(player);
 
     Console.Clear();
 }
@@ -250,7 +282,7 @@ public class Game
 
     public void Prompts()
     {
-        if (_map.PlayerRoom == RoomTypes.Entrance)
+        if (_map.PlayerRoom == RoomTypes.Entrance && !_win)
             Console.WriteLine("You see light coming from the cavern entrance.");
 
         if (_map.PlayerRoom == RoomTypes.FountainRoom)
@@ -261,11 +293,17 @@ public class Game
                 Console.WriteLine("You hear water dripping in this room. The Fountain of Objects is here!");
         }
 
-        if (_pitIsNear)
+        if (_pitIsNear && !_win && !_player.Dead)
             Console.WriteLine("You feel a draft. There is a pit in a nearby room.");
 
         if (_player.Dead)
             Console.WriteLine("You have fallen into a pit and DIED.");
+
+        if (_win)
+        {
+            Console.WriteLine("You have enabled the Fountain of Objects and escaped with your life.");
+            Console.WriteLine("You win!");
+        }
     }
 
     public void ShowRoomsStatus()
