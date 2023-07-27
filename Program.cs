@@ -89,10 +89,6 @@ while (true)
     Console.Clear();
 }
 
-//////////////////////////
-// CLASSES AND THE REST //
-//////////////////////////
-
 public class Player
 {
     private bool _dead;
