@@ -1,4 +1,38 @@
 ﻿
+using System.Reflection.Metadata.Ecma335;
+
+Console.WriteLine($"Welcome to the Fountain of Objects.");
+Console.WriteLine($"Choose a world size between small, medium, and large.");
+
+string? input;
+int worldSize;
+
+while (true)
+{
+    input = Console.ReadLine();
+
+    if (input == "small")
+    {
+        worldSize = 4;
+        break;
+    }
+    else if (input == "medium")
+    {
+        worldSize = 6;
+        break;
+    }
+    else if (input == "large")
+    {
+        worldSize = 8;
+        break;
+    }
+    else
+    {
+        Console.WriteLine("Invalid input.");
+        continue;
+    }
+}
+
 Map map = new Map(4);
 Player player = new Player();
 Game game = new(map, player);
@@ -254,9 +288,9 @@ public class Game
         }
 
         Console.WriteLine();
-        Console.WriteLine($"Win{_win,30}");
-        Console.WriteLine($"Fountain Enabled{_fountainEnabled,30}");
-        Console.WriteLine($"Pit Is Near{_pitIsNear,30}");
+        Console.WriteLine($"Win = {_win}");
+        Console.WriteLine($"Fountain Enabled = {_fountainEnabled}");
+        Console.WriteLine($"Pit Is Near = {_pitIsNear}");
     }
 
     public void CheckWin()
