@@ -259,8 +259,6 @@ public class Coord
 
     public static bool IsAdjacent(Coord first, Coord second)
     {
-        if (first.X == second.X && first.Y == second.Y) return false;
-
         int rowDifference = Math.Abs(first.X - second.X);
         int columnDifference = Math.Abs(first.Y - second.Y);
 
@@ -279,8 +277,6 @@ public class Coord
 
     public static bool IsAdjacent(Coord first, int x, int y)
     {
-        if (first.X == x && first.Y == x) return false;
-
         int rowDifference = Math.Abs(first.X - x);
         int columnDifference = Math.Abs(first.Y - y);
 
@@ -297,6 +293,17 @@ public class Coord
         return false;
     }
 
+    public static bool SameCoord(Coord first, Coord second)
+    {
+        if (first.X == second.X && first.Y == second.Y) return true;
+        return false;
+    }
+
+    public static bool SameCoord(Coord first, int x, int y)
+    {
+        if (first.X == x && first.Y == y) return true;
+        return false;
+    }
 }
 
 public enum RoomTypes { Normal, Entrance, FountainRoom, Pit }
