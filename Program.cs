@@ -1,6 +1,4 @@
 ﻿
-using System.Reflection.Metadata.Ecma335;
-
 Console.WriteLine($"Welcome to the Fountain of Objects.");
 Console.WriteLine($"Choose a world size between small, medium, and large.");
 
