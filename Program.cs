@@ -6,7 +6,6 @@ map.LoadMap();
 
 while (true)
 {
-    Console.WriteLine(map.PlayerRoom);
     player.Death(map);
     
     game.CheckAdjacentPit();
@@ -237,13 +236,27 @@ public class Game
 
     public void ShowRoomsStatus()
     {
-        for (int x = 0; x < _map.GridSize; x++)
+        Console.WriteLine();
+        Console.Write($"Current Room: {_map.PlayerRoom}");
+
+        for (int y = 0; y < _map.GridSize; y++)
         {
-            for (int y = 0; y < _map.GridSize; y++)
+
+            Console.WriteLine();
+
+            for (int x = 0; x < _map.GridSize; x++)
             {
-                Console.WriteLine(String.Format("{0,-16} ({1}, {2}) {3}", _map.Rooms[x, y], x, y, _map.PlayerLoc[x, y]));
+                if (_map.PlayerLoc[x, y] == true) Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write(String.Format("({0},{1})", x, y));
+                Console.ResetColor();
+                Console.Write(" | ");
             }
         }
+
+        Console.WriteLine();
+        Console.WriteLine($"Win{_win,30}");
+        Console.WriteLine($"Fountain Enabled{_fountainEnabled,30}");
+        Console.WriteLine($"Pit Is Near{_pitIsNear,30}");
     }
 
     public void CheckWin()
