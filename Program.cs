@@ -1,6 +1,7 @@
 ﻿
 using Fountain;
 
+/*
 Console.WriteLine($"Welcome to the Fountain of Objects.");
 Console.WriteLine($"Choose a world size between small, medium, and large.");
 
@@ -90,6 +91,7 @@ while (true)
 
     Console.Clear();
 }
+*/
 
 public enum RoomTypes { Normal, Entrance, FountainRoom, Pit }
 public enum Direction { North, South, East, West }
