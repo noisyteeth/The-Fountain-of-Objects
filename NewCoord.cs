@@ -19,4 +19,15 @@ public record NewCoord(int X, int Y)
 
     public static NewCoord operator +(Direction dir, NewCoord a)
         => a + dir;
+
+    public int? this[char index]
+    {
+        get
+        {
+            if (index == 'x') return X;
+            else if (index == 'y') return Y;
+
+            return null;
+        }
+    }
 }
