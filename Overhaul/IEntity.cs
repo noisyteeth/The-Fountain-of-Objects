@@ -9,4 +9,5 @@ public interface IEntity
     public bool Dead { get; set; }
 
     public void MoveEntity(NewCoord offset);
+    public void MoveEntity(Direction dir);
 }

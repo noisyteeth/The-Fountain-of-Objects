@@ -22,4 +22,9 @@ public class NewPlayer : IEntity
     {
         Position += offset;
     }
+
+    public void MoveEntity(Direction dir)
+    {
+        Position += dir;
+    }
 }
