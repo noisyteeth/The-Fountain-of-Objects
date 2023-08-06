@@ -23,13 +23,24 @@ public class NewPlayer : Entity
         _dead = false;
     }
 
-    public override void MoveEntity(NewCoord offset)
+    public override void MoveEntity(NewCoord coord)
     {
-        _position += offset;
+        _position = coord;
     }
 
-    public override void MoveEntity(Direction dir)
+    public override void MoveEntity(params NewCoord[] steps)
     {
-        _position += dir;
+        foreach (NewCoord step in steps)
+        {
+            _position += step;
+        }
+    }
+
+    public override void MoveEntity(params Direction[] steps)
+    {
+        foreach (Direction step in steps)
+        {
+            _position += step;
+        }
     }
 }
