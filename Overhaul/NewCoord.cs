@@ -3,6 +3,11 @@ namespace Fountain;
 
 public record NewCoord(int X, int Y)
 {
+    public override string ToString()
+    {
+        return $"({X}, {Y})";
+    }
+
     public static NewCoord operator +(NewCoord a, NewCoord b)
         => new NewCoord(a.X + b.X, a.Y + b.Y);
 
