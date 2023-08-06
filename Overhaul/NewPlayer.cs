@@ -3,7 +3,7 @@ namespace Fountain;
 
 public class NewPlayer : Entity
 {
-    public event Action? Death;
+    //public event Action? Death;
 
     private NewCoord _position;
     private bool _dead;

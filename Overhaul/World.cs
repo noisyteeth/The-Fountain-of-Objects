@@ -3,7 +3,8 @@ namespace Fountain;
 
 public class World
 {
-
+    private Room[,] _rooms;
+    private int _worldSize;
 }
 
 public class Room
