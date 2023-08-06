@@ -1,30 +1,35 @@
 ﻿
 namespace Fountain;
 
-public class NewPlayer : IEntity
+public class NewPlayer : Entity
 {
     public event Action? Death;
 
-    public NewCoord Position { get; set; }
-    public bool Dead { get; set; }
+    private NewCoord _position;
+    private bool _dead;
 
-    public NewPlayer(NewCoord position)
-    {
-        Position = position;
-    }
+    public NewCoord Position => _position;
+    public bool Dead => _dead;
 
     public NewPlayer()
     {
-        Position = new(0, 0);
+        _position = new(0, 0);
+        _dead = false;
     }
 
-    public void MoveEntity(NewCoord offset)
+    public NewPlayer(NewCoord position)
     {
-        Position += offset;
+        _position = position;
+        _dead = false;
     }
 
-    public void MoveEntity(Direction dir)
+    public override void MoveEntity(NewCoord offset)
     {
-        Position += dir;
+        _position += offset;
+    }
+
+    public override void MoveEntity(Direction dir)
+    {
+        _position += dir;
     }
 }
