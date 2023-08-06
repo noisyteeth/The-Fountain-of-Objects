@@ -4,6 +4,7 @@ namespace Fountain;
 public abstract class Entity
 {
     //public event Action? Death;
+    public event Action? EntityMoved;
 
     private NewCoord _position;
     private bool _dead;
