@@ -27,6 +27,7 @@ public class NewPlayer : Entity
     public override void MoveEntity(NewCoord coord)
     {
         _position = coord;
+        EntityMoved();
     }
 
     public override void MoveEntity(params NewCoord[] steps)
@@ -35,6 +36,8 @@ public class NewPlayer : Entity
         {
             _position += step;
         }
+
+        EntityMoved();
     }
 
     public override void MoveEntity(params Direction[] steps)
@@ -43,5 +46,7 @@ public class NewPlayer : Entity
         {
             _position += step;
         }
+
+        EntityMoved();
     }
 }

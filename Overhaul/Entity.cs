@@ -29,6 +29,7 @@ public class Empty : Entity
     public override void MoveEntity(NewCoord coord)
     {
         _position = coord;
+        EntityMoved();
     }
 
     public override void MoveEntity(params NewCoord[] steps)
@@ -37,6 +38,8 @@ public class Empty : Entity
         {
             _position += step;
         }
+        
+        EntityMoved();
     }
 
     public override void MoveEntity(params Direction[] steps)
@@ -45,5 +48,7 @@ public class Empty : Entity
         {
             _position += step;
         }
+        
+        EntityMoved();
     }
 }
