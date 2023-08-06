@@ -4,6 +4,7 @@ namespace Fountain;
 public class NewPlayer : Entity
 {
     //public event Action? Death;
+    public override event Action? EntityMoved;
 
     private NewCoord _position;
     private bool _dead;

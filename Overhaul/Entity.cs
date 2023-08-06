@@ -4,7 +4,7 @@ namespace Fountain;
 public abstract class Entity
 {
     //public event Action? Death;
-    public event Action? EntityMoved;
+    public abstract event Action? EntityMoved;
 
     private NewCoord _position;
     private bool _dead;
@@ -16,6 +16,8 @@ public abstract class Entity
 
 public class Empty : Entity
 {
+    public override event Action? EntityMoved;
+
     private NewCoord _position;
     private bool _dead;
 
