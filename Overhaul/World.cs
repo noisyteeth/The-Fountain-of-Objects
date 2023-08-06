@@ -25,4 +25,16 @@ public class World
             _ => new Entity[4, 4]
         };
     }
+
+    public void LoadMap()
+    {
+        for (int y = 0; y < _worldSize; y++)
+        {
+            for (int x = 0; x < _worldSize; x++)
+            {
+                if (x == 0 && y == 0)
+                    _roomMap[0, 0] = RoomTypes.Entrance;
+            }
+        }
+    }
 }
