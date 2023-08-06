@@ -8,6 +8,12 @@ public abstract class Entity
     private NewCoord _position;
     private bool _dead;
 
+    // TODO:
+    // Replace MoveEntity() with:
+    // public abstract void MoveEntity(NewCoord coord); (for teleporting to a new location)
+    // public abstract void MoveEntity(params NewCoord[] steps);
+    // public abstract void MoveEntity(params Direction[] steps);
+
     public abstract void MoveEntity(NewCoord offset);
     public abstract void MoveEntity(Direction dir);
 }
