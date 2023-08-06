@@ -8,14 +8,9 @@ public abstract class Entity
     private NewCoord _position;
     private bool _dead;
 
-    // TODO:
-    // Replace MoveEntity() with:
-    // public abstract void MoveEntity(NewCoord coord); (for teleporting to a new location)
-    // public abstract void MoveEntity(params NewCoord[] steps);
-    // public abstract void MoveEntity(params Direction[] steps);
-
-    public abstract void MoveEntity(NewCoord offset);
-    public abstract void MoveEntity(Direction dir);
+    public abstract void MoveEntity(NewCoord coord);
+    public abstract void MoveEntity(params NewCoord[] steps);
+    public abstract void MoveEntity(params Direction[] steps);
 }
 
 public class Empty : Entity
@@ -28,13 +23,24 @@ public class Empty : Entity
         _position = position;
     }
 
-    public override void MoveEntity(NewCoord offset)
+    public override void MoveEntity(NewCoord coord)
     {
-        _position += offset;
+        _position = coord;
     }
 
-    public override void MoveEntity(Direction dir)
+    public override void MoveEntity(params NewCoord[] steps)
     {
-        _position += dir;
+        foreach (NewCoord step in steps)
+        {
+            _position += step;
+        }
+    }
+
+    public override void MoveEntity(params Direction[] steps)
+    {
+        foreach (Direction step in steps)
+        {
+            _position += step;
+        }
     }
 }
