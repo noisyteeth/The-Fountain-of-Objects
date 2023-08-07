@@ -33,7 +33,8 @@ public class Empty : Entity
 
     public override void Teleport(int x, int y)
     {
-        _position = new NewCoord(x, y);
+        _position.X = x;
+        _position.Y = y;
         EntityMoved();
     }
 
