@@ -7,6 +7,9 @@ public class World
     private Entity[,] _entityMap;
     private int _worldSize;
     private NewPlayer _player;
+    private int _entMapX;
+    private int _entMapY;
+
 
     public RoomTypes[,] RoomMap => _roomMap;
     public Entity[,] EntityMap => _entityMap;
@@ -17,6 +20,8 @@ public class World
         _worldSize = worldSize;
         _player = player;
         player.EntityMoved += OnPlayerMove;
+        _entMapX = 0;
+        _entMapY = 0;
 
         _roomMap = _worldSize switch
         {
