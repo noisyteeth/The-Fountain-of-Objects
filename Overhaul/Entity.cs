@@ -9,7 +9,7 @@ public abstract class Entity
     private NewCoord _position;
     private bool _dead;
 
-    public abstract void TeleportEntity(int x, int y);
+    public abstract void Teleport(int x, int y);
     public abstract void MoveByOffset(int x, int y);
     public abstract void MoveByDir(params Direction[] steps);
 }
@@ -31,7 +31,7 @@ public class Empty : Entity
         _position = new NewCoord(x, y);
     }
 
-    public override void TeleportEntity(int x, int y)
+    public override void Teleport(int x, int y)
     {
         _position = new NewCoord(x, y);
         EntityMoved();

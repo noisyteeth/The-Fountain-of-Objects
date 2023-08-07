@@ -7,6 +7,7 @@ public class World
     private Entity[,] _entityMap;
     private int _worldSize;
     private NewPlayer _player;
+    
     private int _playerLocX;
     private int _playerLocY;
 
@@ -74,7 +75,7 @@ public class World
             {
                 if (_entityMap[x, y] == null)
                 {
-                    _entityMap[x, y] = new Empty(new NewCoord(y, x));
+                    _entityMap[x, y] = new Empty(new NewCoord(x, y));
                 }
             }
         }

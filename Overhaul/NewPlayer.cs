@@ -30,7 +30,7 @@ public class NewPlayer : Entity
         _dead = false;
     }
 
-    public override void TeleportEntity(int x, int y)
+    public override void Teleport(int x, int y)
     {
         _position = new NewCoord(x, y);
         EntityMoved();
