@@ -7,6 +7,9 @@ public class World
     private Entity[,] _entityMap;
     private int _worldSize;
 
+    public RoomTypes[,] RoomMap => _roomMap;
+    public Entity[,] EntityMap => _entityMap;
+
     public World(int worldSize)
     {
         _worldSize = worldSize;
