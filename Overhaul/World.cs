@@ -28,12 +28,42 @@ public class World
 
     public void LoadMap()
     {
-        for (int y = 0; y < _worldSize; y++)
+        _roomMap[0, 0] = RoomTypes.Entrance;
+        _entityMap[0, 0] = new NewPlayer();
+
+        if (_worldSize == 4)
         {
-            for (int x = 0; x < _worldSize; x++)
+            _roomMap[2, 0] = RoomTypes.FountainRoom;
+
+            _roomMap[1, 0] = RoomTypes.Pit;
+        }
+
+        else if (_worldSize == 6)
+        {
+            _roomMap[3, 0] = RoomTypes.FountainRoom;
+
+            _roomMap[2, 0] = RoomTypes.Pit;
+            _roomMap[3, 1] = RoomTypes.Pit;
+        }
+
+        else if (_worldSize == 8)
+        {
+            _roomMap[4, 0] = RoomTypes.FountainRoom;
+
+            _roomMap[2, 0] = RoomTypes.Pit;
+            _roomMap[3, 1] = RoomTypes.Pit;
+            _roomMap[4, 2] = RoomTypes.Pit;
+            _roomMap[5, 3] = RoomTypes.Pit;
+        }
+
+        for (int x = 0; x < _worldSize; x++)
+        {
+            for (int y = 0; y < _worldSize; y++)
             {
-                if (x == 0 && y == 0)
-                    _roomMap[0, 0] = RoomTypes.Entrance;
+                if (_entityMap[x, y] == null)
+                {
+                    _entityMap[x, y] = new Empty(new NewCoord(y, x));
+                }
             }
         }
     }
