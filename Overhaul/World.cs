@@ -18,9 +18,10 @@ public class World
 
     public World(int worldSize, NewPlayer player)
     {
+        player.EntityMoved += OnEntityMovement;
+
         _worldSize = worldSize;
         _player = player;
-        player.EntityMoved += OnPlayerMove;
         _playerLocX = 0;
         _playerLocY = 0;
 
@@ -78,7 +79,7 @@ public class World
         }
     }
 
-    public void OnPlayerMove()
+    public void OnEntityMovement()
     {
         UpdateEntityMap();
     }
