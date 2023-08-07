@@ -47,6 +47,13 @@ public class Empty : Entity
         EntityMoved();
     }
 
+    public override void MoveByOffset(NewCoord coord)
+    {
+        _position += coord;
+
+        EntityMoved();
+    }
+
     public override void MoveByDir(params Direction[] steps)
     {
         foreach (Direction step in steps)
