@@ -15,6 +15,7 @@ public class World
     {
         _worldSize = worldSize;
         _player = player;
+        player.EntityMoved += OnPlayerMove;
 
         _roomMap = _worldSize switch
         {
@@ -71,5 +72,15 @@ public class World
                 }
             }
         }
+    }
+
+    public void OnPlayerMove()
+    {
+        UpdateEntityMap();
+    }
+
+    public void UpdateEntityMap()
+    {
+        Console.WriteLine("Updated entity map.");
     }
 }
