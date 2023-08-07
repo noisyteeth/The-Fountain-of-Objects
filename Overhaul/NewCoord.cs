@@ -3,6 +3,8 @@ namespace Fountain;
 
 public record NewCoord(int X, int Y)
 {
+    public int X { get; set; } = X;
+    public int Y { get; set; } = Y;
     public override string ToString()
     {
         return $"({X}, {Y})";
