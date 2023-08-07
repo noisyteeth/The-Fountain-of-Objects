@@ -11,6 +11,7 @@ public abstract class Entity
 
     public abstract void Teleport(int x, int y);
     public abstract void MoveByOffset(int x, int y);
+    public abstract void MoveByOffset(NewCoord coord);
     public abstract void MoveByDir(params Direction[] steps);
 }
 
