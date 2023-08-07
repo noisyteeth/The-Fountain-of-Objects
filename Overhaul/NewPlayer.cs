@@ -24,13 +24,13 @@ public class NewPlayer : Entity
         _dead = false;
     }
 
-    public override void MoveEntity(NewCoord coord)
+    public override void TeleportEntity(NewCoord coord)
     {
         _position = coord;
         EntityMoved();
     }
 
-    public override void MoveEntity(params NewCoord[] steps)
+    public override void MoveByOffset(params NewCoord[] steps)
     {
         foreach (NewCoord step in steps)
         {
@@ -40,7 +40,7 @@ public class NewPlayer : Entity
         EntityMoved();
     }
 
-    public override void MoveEntity(params Direction[] steps)
+    public override void MoveByDir(params Direction[] steps)
     {
         foreach (Direction step in steps)
         {
