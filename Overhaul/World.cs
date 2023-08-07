@@ -10,6 +10,7 @@ public class World
 
     public RoomTypes[,] RoomMap => _roomMap;
     public Entity[,] EntityMap => _entityMap;
+    public NewPlayer Player => _player;
 
     public World(int worldSize, NewPlayer player)
     {
@@ -81,6 +82,33 @@ public class World
 
     public void UpdateEntityMap()
     {
-        Console.WriteLine("Updated entity map.");
+        int x = _player.Position.X;
+        int y = _player.Position.Y;
+
+        if (y - 1 < 0 )
+        {
+            _player.Position.Y = 0;
+            y = _player.Position.Y;
+        }
+
+        else if (y > _worldSize)
+        {
+            _player.Position.Y = _worldSize - 1;
+            y = _player.Position.Y;
+        }
+
+        if (x - 1 < 0)
+        {
+            _player.Position.X = 0;
+            x = _player.Position.X;
+        }
+
+        else if (x > _worldSize)
+        {
+            _player.Position.X = _worldSize - 1;
+            x = _player.Position.X;
+        }
+
+        _entityMap[x, y] = _player;
     }
 }
