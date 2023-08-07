@@ -115,6 +115,10 @@ public class World
         }
 
         _entityMap[_playerLocX, _playerLocY] = new Empty(_playerLocX, _playerLocY);
+
+        _playerLocX = x;
+        _playerLocY = y;
+
         _entityMap[x, y] = _player;
     }
 }
