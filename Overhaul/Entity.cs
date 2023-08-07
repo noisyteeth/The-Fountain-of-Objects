@@ -9,9 +9,9 @@ public abstract class Entity
     private NewCoord _position;
     private bool _dead;
 
-    public abstract void MoveEntity(NewCoord coord);
-    public abstract void MoveEntity(params NewCoord[] steps);
-    public abstract void MoveEntity(params Direction[] steps);
+    public abstract void TeleportEntity(NewCoord coord);
+    public abstract void MoveByOffset(params NewCoord[] steps);
+    public abstract void MoveByDir(params Direction[] steps);
 }
 
 public class Empty : Entity
@@ -26,13 +26,13 @@ public class Empty : Entity
         _position = position;
     }
 
-    public override void MoveEntity(NewCoord coord)
+    public override void TeleportEntity(NewCoord coord)
     {
         _position = coord;
         EntityMoved();
     }
 
-    public override void MoveEntity(params NewCoord[] steps)
+    public override void MoveByOffset(params NewCoord[] steps)
     {
         foreach (NewCoord step in steps)
         {
@@ -42,7 +42,7 @@ public class Empty : Entity
         EntityMoved();
     }
 
-    public override void MoveEntity(params Direction[] steps)
+    public override void MoveByDir(params Direction[] steps)
     {
         foreach (Direction step in steps)
         {
