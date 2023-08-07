@@ -37,10 +37,7 @@ public class World
             8 => new Entity[8, 8],
             _ => new Entity[4, 4]
         };
-    }
 
-    public void LoadMap()
-    {
         _roomMap[0, 0] = RoomTypes.Entrance;
         _entityMap[0, 0] = _player;
 
