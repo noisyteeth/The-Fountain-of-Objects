@@ -62,17 +62,6 @@ public class World
             _roomMap[4, 2] = RoomTypes.Pit;
             _roomMap[5, 3] = RoomTypes.Pit;
         }
-
-        for (int x = 0; x < _worldSize; x++)
-        {
-            for (int y = 0; y < _worldSize; y++)
-            {
-                if (_entityMap[x, y] == null)
-                {
-                    _entityMap[x, y] = new Empty(new NewCoord(y, x));
-                }
-            }
-        }
     }
 
     public void OnPlayerMove()
