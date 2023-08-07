@@ -6,7 +6,7 @@ public abstract class Entity
     //public event Action? Death;
     public abstract event Action? EntityMoved;
 
-    private NewCoord _position;
+    private NewCoord? _position;
     private bool _dead;
 
     public abstract void Teleport(int x, int y);
