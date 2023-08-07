@@ -30,18 +30,16 @@ public class NewPlayer : Entity
         _dead = false;
     }
 
-    public override void TeleportEntity(NewCoord coord)
+    public override void TeleportEntity(int x, int y)
     {
-        _position = coord;
+        _position = new NewCoord(x, y);
         EntityMoved();
     }
 
-    public override void MoveByOffset(params NewCoord[] steps)
+    public override void MoveByOffset(int x, int y)
     {
-        foreach (NewCoord step in steps)
-        {
-            _position += step;
-        }
+        _position.X += x;
+        _position.Y += y;
 
         EntityMoved();
     }
