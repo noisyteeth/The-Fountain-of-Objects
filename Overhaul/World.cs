@@ -6,13 +6,15 @@ public class World
     private RoomTypes[,] _roomMap;
     private Entity[,] _entityMap;
     private int _worldSize;
+    private NewPlayer _player;
 
     public RoomTypes[,] RoomMap => _roomMap;
     public Entity[,] EntityMap => _entityMap;
 
-    public World(int worldSize)
+    public World(int worldSize, NewPlayer player)
     {
         _worldSize = worldSize;
+        _player = player;
 
         _roomMap = _worldSize switch
         {
@@ -32,7 +34,7 @@ public class World
     public void LoadMap()
     {
         _roomMap[0, 0] = RoomTypes.Entrance;
-        _entityMap[0, 0] = new NewPlayer();
+        _entityMap[0, 0] = _player;
 
         if (_worldSize == 4)
         {
