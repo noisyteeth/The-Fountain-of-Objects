@@ -26,6 +26,11 @@ public class Empty : Entity
         _position = position;
     }
 
+    public Empty(int x, int y)
+    {
+        _position = new NewCoord(x, y);
+    }
+
     public override void TeleportEntity(NewCoord coord)
     {
         _position = coord;

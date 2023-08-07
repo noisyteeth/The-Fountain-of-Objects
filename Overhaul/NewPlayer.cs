@@ -24,6 +24,12 @@ public class NewPlayer : Entity
         _dead = false;
     }
 
+    public NewPlayer(int x, int y)
+    {
+        _position = new NewCoord(x, y);
+        _dead = false;
+    }
+
     public override void TeleportEntity(NewCoord coord)
     {
         _position = coord;
