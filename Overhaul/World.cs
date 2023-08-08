@@ -94,7 +94,6 @@ public class World
             _player.Position.Y = 0;
             y = _player.Position.Y;
         }
-
         else if (y > _worldSize)
         {
             _player.Position.Y = _worldSize - 1;
@@ -106,7 +105,6 @@ public class World
             _player.Position.X = 0;
             x = _player.Position.X;
         }
-
         else if (x > _worldSize)
         {
             _player.Position.X = _worldSize - 1;
