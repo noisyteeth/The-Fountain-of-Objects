@@ -36,7 +36,6 @@ public class Empty : Entity
     {
         _position.X = x;
         _position.Y = y;
-        EntityMoved();
     }
 
     public override void MoveByOffset(int x, int y)
@@ -44,14 +43,12 @@ public class Empty : Entity
         _position.X += x;
         _position.Y += y;
         
-        EntityMoved();
     }
 
     public override void MoveByOffset(NewCoord coord)
     {
         _position += coord;
 
-        EntityMoved();
     }
 
     public override void MoveByDir(params Direction[] steps)
@@ -61,6 +58,5 @@ public class Empty : Entity
             _position += step;
         }
         
-        EntityMoved();
     }
 }
